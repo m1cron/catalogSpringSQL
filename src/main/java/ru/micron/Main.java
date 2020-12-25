@@ -9,8 +9,13 @@ public class Main {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringAppContext.class);
 
         H2Handler h2Handler = context.getBean("h2HandlerBean", H2Handler.class);
-        h2Handler.export();
-        
+        h2Handler.add(new CatalogItem("phone", "iphone 5"));
+        h2Handler.add(new CatalogItem("phone12", "iphone 5"));
+        h2Handler.editDescription(2, "2348723tqdbzgj;dfzg");
+
+        System.out.println(h2Handler.getByName("phone"));
+        //h2Handler.printTable();
+
         context.close();
     }
 }

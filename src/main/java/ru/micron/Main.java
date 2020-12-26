@@ -12,9 +12,7 @@ public class Main {
         h2Handler.add(new CatalogItem("phone", "iphone 5"));
         h2Handler.add(new CatalogItem("phone12", "iphone 5"));
         h2Handler.editDescription(2, "2348723tqdbzgj;dfzg");
-
-        System.out.println(h2Handler.getByName("phone"));
-        //h2Handler.printTable();
+        h2Handler.printTable();
 
         context.close();
     }

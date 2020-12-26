@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.sql.*;
 
-@Component("h2HandlerBean")
+@Component
 public class H2Handler {
     private final SqlHelper sqlHelperBean;
 

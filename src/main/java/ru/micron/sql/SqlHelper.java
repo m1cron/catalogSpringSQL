@@ -1,5 +1,6 @@
 package ru.micron.sql;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -7,17 +8,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@Component("sqlHelperBean")
+@Component
 public class SqlHelper {
     protected Connection CONNECTION;
 
-    public SqlHelper(String db_url) {
-        try {
-            CONNECTION = DriverManager.getConnection(db_url);
-            System.out.print("Connection Success!\n");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    @Autowired
+    public SqlHelper(Connection CONNECTION) {
+        this.CONNECTION = CONNECTION;
     }
 
     public void execute(String sql) {

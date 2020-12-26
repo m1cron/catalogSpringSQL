@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Scope;
 import ru.micron.sql.H2Handler;
 import ru.micron.sql.SqlHelper;
 
+import javax.xml.transform.Source;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 @Configuration
 @PropertySource("classpath:application.properties")
 public class SpringAppContext {
@@ -15,13 +20,23 @@ public class SpringAppContext {
     private String db_url;
 
     @Bean
-    @Scope("singleton")
-    public SqlHelper sqlHelperBean() {
-        return new SqlHelper(db_url);
+    public Connection dataSourceBean() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(db_url);
+        } catch (SQLException throwables) {
+            System.err.print("Connection error!\n");
+            throwables.printStackTrace();
+        }
+        return connection;
     }
 
     @Bean
-    @Scope("singleton")
+    public SqlHelper sqlHelperBean() {
+        return new SqlHelper(dataSourceBean());
+    }
+
+    @Bean
     public H2Handler h2HandlerBean() {
         return new H2Handler(sqlHelperBean());
     }
